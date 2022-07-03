@@ -1,18 +1,14 @@
+from bms_factors import charge_rate, soc, temperature
 
-def battery_is_ok(temperature, soc, charge_rate):
-  if temperature < 0 or temperature > 45:
-    print('Temperature is out of range!')
-    return False
-  elif soc < 20 or soc > 80:
-    print('State of Charge is out of range!')
-    return False
-  elif charge_rate > 0.8:
-    print('Charge rate is out of range!')
-    return False
+Temperature = temperature.Temperature()
+Charge_Rate = charge_rate.Charge_Rate()
+State_Of_Charge = soc.State_Of_Charge()
 
-  return True
-
-
-if __name__ == '__main__':
-  assert(battery_is_ok(25, 70, 0.7) is True)
-  assert(battery_is_ok(50, 85, 0) is False)
+def battery_is_ok(temperature_val, soc_val, charge_rate_val):
+    is_temp_ok = Temperature.verify_operating_temperature_with_battery(temperature_val)
+    is_soc_ok = State_Of_Charge.verify_soc_battery(soc_val)
+    is_charge_rate_ok = Charge_Rate.verify_charge_rate(charge_rate_val)
+    if(is_temp_ok and is_soc_ok and is_charge_rate_ok):
+        return True
+    else:
+        return False
