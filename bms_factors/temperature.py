@@ -1,23 +1,14 @@
-class Temperature:
+from range_checker import Range_Check
+class Temperature(Range_Check):
     def __init__(self) -> None:
         self.start_c = 5
         self.end_c = 45
-        self.print_msg = lambda str, verbosity : print(str) if verbosity else None
+        super().__init__(start=self.start_c, end=self.end_c)
 
-    def verify_operating_temperature_with_battery(self, temperature_in_c, verbosity=False) -> bool:
-        if(self.is_bad_temperature(temperature_in_c)):
+    def validate(self, temperature_in_c, verbosity=False) -> bool:
+        if(self.check_out_of_range(temperature_in_c)):
             self.print_msg("Temperature is out of range!", verbosity)
             return False
-        elif(self.is_ok_temperature(temperature_in_c)):
-            self.print_msg("Temperature Okay to charge battery!", verbosity)
+        else:
+            self.print_msg("Temperature is good to charge!", verbosity)
             return True
-
-    def is_bad_temperature(self, temperature) -> bool:
-        if(temperature < 5 or temperature > 45):
-            return True
-        return False
-
-    def is_ok_temperature(self, temperature) -> bool:
-        if(temperature in range(self.start_c, self.end_c+1)):
-            return True
-        return False
