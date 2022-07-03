@@ -11,6 +11,4 @@ def battery_is_ok(temperature_val, soc_val, charge_rate_val):
     return test_all_factors(is_temp_ok, is_soc_ok, is_charge_rate_ok)
 
 def test_all_factors(is_temp_ok, is_soc_ok, is_charge_rate_ok):
-    if(is_temp_ok and is_soc_ok and is_charge_rate_ok):
-        return True
-    return False
+    return (is_temp_ok and is_soc_ok and is_charge_rate_ok)
