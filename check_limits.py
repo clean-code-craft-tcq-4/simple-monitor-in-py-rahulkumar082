@@ -1,18 +1,19 @@
+from bms_factors import charge_rate, soc, temperature
 
-def battery_is_ok(temperature, soc, charge_rate):
-  if temperature < 0 or temperature > 45:
-    print('Temperature is out of range!')
-    return False
-  elif soc < 20 or soc > 80:
-    print('State of Charge is out of range!')
-    return False
-  elif charge_rate > 0.8:
-    print('Charge rate is out of range!')
-    return False
+class Check_Limits:
+    def __init__(self) -> None:
+        self.obj_list = [
+            temperature.Temperature(),
+            soc.State_Of_Charge(),
+            charge_rate.Charge_Rate()
+        ]
 
-  return True
-
-
-if __name__ == '__main__':
-  assert(battery_is_ok(25, 70, 0.7) is True)
-  assert(battery_is_ok(50, 85, 0) is False)
+    def battery_is_ok(self, arr_dict_obj, language='English'):
+        validate_conditions_arr = []
+        index = 0
+        for dict_obj in arr_dict_obj:
+            for val in dict_obj:
+                warning = dict_obj.get(val, False)
+                validate_conditions_arr.append(self.obj_list[index].validate(val, warning, language))
+            index += 1
+        return all(validate_conditions_arr)
