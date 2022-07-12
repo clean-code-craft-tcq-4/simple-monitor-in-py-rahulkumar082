@@ -8,7 +8,6 @@ class Temperature(Range_Check, Early_Warning):
         self.end_c = 45
         Range_Check.__init__(self, start=self.start_c, end=self.end_c)
         Early_Warning.__init__(self, start=self.start_c, end=self.end_c)
-        print('Factor: ', self.__class__.__name__)
 
     def validate(self, temperature_in_c, warning=True) -> bool:
         verbosity = True

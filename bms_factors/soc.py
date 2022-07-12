@@ -8,7 +8,6 @@ class State_Of_Charge(Range_Check, Early_Warning):
         self.max_req_percent = 80
         Range_Check.__init__(self, start=self.min_req_percent, end=self.max_req_percent)
         Early_Warning.__init__(self, start=self.min_req_percent, end=self.max_req_percent)
-        print('Factor: ', self.__class__.__name__)
 
     def validate(self, current_percentage, warning=True) -> bool:
         verbosity = True
