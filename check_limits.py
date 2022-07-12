@@ -2,15 +2,18 @@ from bms_factors import charge_rate, soc, temperature
 
 class Check_Limits:
     def __init__(self) -> None:
-        Temperature = temperature.Temperature()
-        Charge_Rate = charge_rate.Charge_Rate()
-        State_Of_Charge = soc.State_Of_Charge()
-        self.dict_objs = {'temp_val': Temperature, 'soc_val': State_Of_Charge, 'cr_val': Charge_Rate}   
+        self.obj_list = [
+            temperature.Temperature(),
+            soc.State_Of_Charge(),
+            charge_rate.Charge_Rate()
+        ]
 
-    def battery_is_ok(self, *args, verbosity=False):
+    def battery_is_ok(self, arr_dict_obj):
         validate_conditions_arr = []
-        obj_count = 0
-        for key, obj in self.dict_objs.items():
-            validate_conditions_arr.append(obj.validate(args[obj_count], verbosity))
-            obj_count += 1
+        index = 0
+        for dict_obj in arr_dict_obj:
+            for val in dict_obj:
+                warning = dict_obj.get(val, False)
+                validate_conditions_arr.append(self.obj_list[index].validate(val, warning))
+            index += 1
         return all(validate_conditions_arr)
