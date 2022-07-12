@@ -1,6 +1,3 @@
-from numpy import greater
-
-
 class Language:
     def language_switcher(self, required_language, str):
         switcher = {}
